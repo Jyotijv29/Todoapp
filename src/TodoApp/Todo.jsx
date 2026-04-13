@@ -2,8 +2,10 @@ import React, { useEffect, useState } from "react";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import SearchIcon from "@mui/icons-material/Search";
+import { useNavigate } from "react-router-dom";
 
 const Todo = () => {
+  const navigate = useNavigate();
   const todokey = "values";
 
   const [data, setData] = useState({ newtask: "", duedate: "", type: "" });
@@ -12,13 +14,11 @@ const Todo = () => {
     if (!rawItems) return [];
     return JSON.parse(rawItems);
   });
-  const [AddTask, setAddtask] = useState(false);
+
   const [editid, setEditid] = useState("");
   const [showdata, setShowdata] = useState("all");
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState();
-  const [sortorder, setSortOrder] = useState("asc");
-  const [sortedData, setSortdata] = useState([]);
 
   useEffect(() => {
     localStorage.setItem(todokey, JSON.stringify(trackdata));
@@ -56,6 +56,7 @@ const Todo = () => {
     if (item === "pending") return "bg-purple-300";
     if (item === "complete") return "bg-orange-300";
     if (item === "running") return "bg-red-300";
+    if (item === "") return "bg-white";
   };
   const handleShow = (item) => {
     setShowdata(item);
@@ -84,102 +85,101 @@ const Todo = () => {
   };
   return (
     <>
-      <div className="flex flex-col w-full">
-        <div className="flex mx-auto ">
-          <input
-            type="text"
-            placeholder="Enter your task"
-            name="newtask"
-            value={data.newtask}
-            className="p-2 rounded-2xl outline-none bg-pink-200 m-2"
-            onChange={(e) =>
-              setData((prev) => ({ ...prev, newtask: e.target.value }))
-            }
-          />
-
-          <input
-            type="date"
-            placeholder="enter your task"
-            name="newtask"
-            value={data.duedate}
-            onChange={(e) =>
-              setData((prev) => ({ ...prev, duedate: e.target.value }))
-            }
-          />
-          <label className="mx-auto m-2 bg-pink-200 rounded-2xl p-2">
-            Status:
-            <select
-              name="status"
-              value={data.type}
+      <div className="flex flex-col w-full bg-gradient-to-r from-purple-800  via-blue-800 to-indigo-950 h-screen ">
+        <h1 className="text-3xl font-bold  self-center p-4 m-3"> Todo List</h1>
+        <div className="flex mx-auto flex-wrap gap-15 ">
+          <div className="flex mx-auto justify-center items-center md:text-lg">
+            <label className="text-white font-semibold">Task Name</label>
+            <input
+              type="text"
+              placeholder="Enter your task"
+              name="newtask"
+              value={data.newtask}
+              className="p-2 rounded-2xl outline-none bg-pink-200 m-2 placeholder-black"
               onChange={(e) =>
-                setData((prev) => ({ ...prev, type: e.target.value }))
+                setData((prev) => ({ ...prev, newtask: e.target.value }))
               }
-              className="outline-2 rounded-2xl ml-2 p-1"
-            >
-              <option value="complete">Complete</option>
-              <option value="pending">Pending</option>
-              <option value="running">Running</option>
-            </select>
-          </label>
-
+            />
+          </div>
+          <div className="flex mx-auto justify-center items-center md:text-lg ">
+            <label className="text-white font-semibold">Due-Date</label>
+            <input
+              type="date"
+              placeholder="enter your task"
+              name="newtask"
+              value={data.duedate}
+              onChange={(e) =>
+                setData((prev) => ({ ...prev, duedate: e.target.value }))
+              }
+              className="p-2 rounded-2xl outline-none bg-pink-200 m-2"
+            />
+          </div>
+          <div className="flex mx-auto justify-center items-center">
+            <label className="mx-auto m-2 rounded-2xl p-2 text-white font-semibold">
+              Status:
+              <select
+                name="status"
+                value={data.type}
+                onChange={(e) =>
+                  setData((prev) => ({ ...prev, type: e.target.value }))
+                }
+                className="outline-1 rounded-2xl ml-2 p-1 text-black bg-pink-200"
+              >
+                <option value="complete">Complete</option>
+                <option value="pending">Pending</option>
+                <option value="running">Running</option>
+              </select>
+            </label>
+          </div>
           <button
-            className="rounded-2xl bg-black text-white m-2 p-2"
+            className="rounded-2xl bg-black text-white m-2 p-2 md:text-lg"
             onClick={(e) => handleClick(e)}
           >
             {editid ? "update task" : "Add Task"}
           </button>
         </div>
-
-        <div className="w-2xl mx-auto flex justify-between  border-emerald-300 p-5  max-w-xl rounded-2xl">
-          {" "}
-          Task List
-          <div
-            className="rounded-2xl border-2 p-2 border-black cursor-pointer transition-all duration-300 ease-in-out"
-            onClick={() => setOpen(!open)}
-          >
-            {" "}
-            {showdata} <KeyboardArrowDownIcon />{" "}
-            {open && (
-              <div className="mx-auto rounded-xl shadow-md bg-white transition-all duration-1300 ease-in-out">
-                {["all", "pending", "complete", "running"].map((item) => (
-                  <div
-                    key={item}
-                    className="border-t border-black  flex flex-col w-full "
-                  >
-                    <p
-                      onClick={() => handleShow(item)}
-                      className="shadow-md hover:bg-gray-500 cursor-pointer "
+        <div className="flex justify-between items-center  gap-5 md:gap-15 mx-auto m-3 md:text-lg p-2">
+          <div className=" flex justify-between items-center  mx-auto m-3 md:text-lg p-2">
+            <label className="mr-2 text-white font-semibold">
+              {" "}
+              Search by status
+            </label>
+            <div
+              className="rounded-2xl bg-pink-200 border-2 p-2 border-black cursor-pointer transition-all duration-300 ease-in-out self-end"
+              onClick={() => setOpen(!open)}
+            >
+              {showdata} <KeyboardArrowDownIcon />{" "}
+              {open && (
+                <div className="mx-auto rounded-xl shadow-md bg-pink-200 transition-all duration-1300 ease-in-out md:text-lg">
+                  {["all", "pending", "complete", "running"].map((item) => (
+                    <div
+                      key={item}
+                      className="border-t border-black  flex flex-col w-full md:text-lg"
                     >
-                      {" "}
-                      {item}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            )}
+                      <p
+                        onClick={() => handleShow(item)}
+                        className="shadow-md hover:bg-gray-500 cursor-pointer md:text-lg"
+                      >
+                        {" "}
+                        {item}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+          <div className="rounded-2xl bg-pink-200 w-100 p-2 shadow-lg md:text-lg">
+            <input
+              placeholder="Search by Task name"
+              className="outline-none placeholder-black"
+              onChange={(e) => setSearch(e.target.value)}
+              value={search}
+            />
           </div>
         </div>
 
-        <div className="rounded-2xl bg-pink-200 outline-neutral-50 w-100 mx-auto flex justify-between p-2 mb-3">
-          <input
-            placeholder="Enter task name to search"
-            className="outline-none"
-            onChange={(e) => setSearch(e.target.value)}
-            value={search}
-          />
-          <SearchIcon />
-        </div>
-
-        <div
-          className="mx-auto bg-black rounded-2xl text-white p-2 "
-          onClick={() => HandleDateFilter()}
-        >
-          Filter by date <span> {sortorder == "asc" ? "Desc" : "asc"}</span>
-        </div>
-
-        <div className="mx-auto border-emerald-300 p-2  max-w-xl rounded-2xl">
-          {/* {trackdata.} */}
-
+        <div className="mx-auto border-emerald-300 p-2 rounded-2xl w-2xl  md:text-lg">
           {trackdata
             .filter((item) => {
               const matchStatus = showdata == "all" || showdata == item.type;
@@ -192,12 +192,12 @@ const Todo = () => {
               <div
                 key={item.id}
                 className={`mx-auto flex justify-between ${handleFilter(item.type)}
-              
+              border-b-1 items-center justify-between gap-3 md:text-lg
               `}
               >
-                <p className="p-4"> {item.newtask}</p>
-                <p className="p-4"> {item.duedate}</p>
-                <p className="p-4"> {item.type}</p>
+                <p className="p-4 w-30 md:w-40 lg:w-full "> {item.newtask}</p>
+                <p className="p-4 w-auto md:w-80"> {item.duedate}</p>
+                <p className="p-4 w-auto  md:w-80"> {item.type}</p>
                 <button
                   onClick={() => handleEdit(item.id)}
                   className="rounded-2xl bg-black text-white p-2 m-2"
@@ -213,6 +213,13 @@ const Todo = () => {
               </div>
             ))}
         </div>
+        <button
+          className="rounded-2xl bg-black w-20 self-center text-white p-2 m-2"
+          onClick={() => navigate("/")}
+        >
+          {" "}
+          Back
+        </button>
       </div>
     </>
   );

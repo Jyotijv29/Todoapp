@@ -1,11 +1,19 @@
 import { useState } from "react";
-
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import TodoView from "./TodoApp/TodoView";
+import Todo from "./TodoApp/Todo";
+import NewTodos from "./TodoApp/NewTodos";
 
 function App() {
   return (
     <>
-      <TodoView />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<TodoView />} />
+          <Route path="/simple" element={<Todo />} />
+          <Route path="/advanced" element={<NewTodos />} />
+        </Routes>
+      </BrowserRouter>
     </>
   );
 }
