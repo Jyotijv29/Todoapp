@@ -27,21 +27,20 @@ const TodoView = () => {
               Basic crud operation with clean Ui
             </p>
           </div>
-        </div>
-
-        <div
-          className="bg-white  w-full sm:w-64 p-6 rounded-2xl mt-10 shadow-md cursor-pointer bg-gradient-to-r from-pink-500 via-sky-400 to-indigo-500 hover:shadow-2xl hover:scale-105 transition duration-300"
-          onClick={() => navigate("advanced")}
-        >
-          <Sparkles className=" mb-3" size={30} />
-          <h2 className="text-xl font-semibold text-gray-800">
-            {" "}
-            Advanced Todo
-          </h2>
-          <p className="text-gray-600 mt-2">
-            {" "}
-            Basic crud operation with clean Ui
-          </p>
+          <div
+            className="  w-full sm:w-64 p-6 rounded-2xl mt-10 shadow-md cursor-pointer bg-gradient-to-r from-pink-500 via-sky-400 to-indigo-500 hover:shadow-2xl hover:scale-105 transition duration-300"
+            onClick={() => navigate("advanced")}
+          >
+            <Sparkles className=" mb-3" size={30} />
+            <h2 className="text-xl font-semibold text-gray-800">
+              {" "}
+              Advanced Todo
+            </h2>
+            <p className="text-gray-600 mt-2">
+              {" "}
+              Basic crud operation with clean Ui
+            </p>
+          </div>
         </div>
       </div>
     </>

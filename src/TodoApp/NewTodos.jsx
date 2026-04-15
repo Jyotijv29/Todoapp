@@ -31,7 +31,7 @@ const NewTodos = () => {
       setCurrentPage(lastpage);
       return updated;
     });
-
+    toast.success("task added");
     setArr({ Name: "", duedate: "", Priority: "" });
   };
 
@@ -95,31 +95,34 @@ const NewTodos = () => {
 
   const paginatedData = displayData.slice(firsttIndex, lastIndex);
   const totalPage = Math.ceil(displayData.length / itemsperpage);
-  // const itemspage = Math.ceil(totalPage / itemsperpage);
 
   return (
     <>
-      {/* sorting */}
       <div
-        className={`${darkmode ? "bg-gray-800 text-white" : "bg-white text-black"} h-screen`}
+        className={`${darkmode ? "bg-gray-800 text-white" : "bg-white text-black"} min-h-screen w-full flex flex-col items-center`}
       >
-        <div className="w-full text-center text-4xl font-medium ">
-          {" "}
+        <div className="flex justify-between items-center px-4 md:px-10 mt-4 w-full">
           <h1
-            className={`${darkmode ? "bg-gradient-to-r from-white to-purple-500 bg-clip-text text-transparent" : "bg-gradient-to-r from-black to-purple-500 bg-clip-text text-transparent"} text-4xl font-bold text-center mt-6 `}
+            className={`text-2xl md:text-4xl font-bold tracking-wide transition-all duration-500 ${darkmode ? "bg-gradient-to-r from-white to-purple-400 bg-clip-text text-transparent" : "bg-gradient-to-r from-black to-purple-600 bg-clip-text text-transparent"}`}
           >
             To-Do-App
           </h1>{" "}
+          <button
+            onClick={() => setDarkmode(!darkmode)}
+            className={`px-4 py-2  rounded-full shadow-md transition-all duration-300 hover:scale-110 ${darkmode ? "bg-yellow-400 text-black" : "bg-gray-800 text-white"}`}
+          >
+            {darkmode ? "Light ☀️" : "Dark 🌙"}
+          </button>
         </div>
-        <div className="" onClick={() => setDarkmode(!darkmode)}>
-          {" "}
-          Darkmode {darkmode ? "🌙" : "☀️"}
-        </div>
-        <div className="mx-auto  flex flex-col md:flex-row justify-evenly items-left">
-          <div className="flex justify-center items-center  p-2 m-3">
-            <label className=" font-semibold text-xl"> Name</label>
+
+        <div className="flex flex-col md:flex-row gap-5 justify-center items-center px-4 mt-6">
+          <div className="flex flex-col md:flex-row  itmes-center  w-full md:w-auto gap-1">
+            <label className=" font-semibold text-xl md:self-center">
+              {" "}
+              Name
+            </label>
             <input
-              className=" rounded-2xl outline-indigo-50 border-2 m-3 p-2 shadow-lg max-w-4xl"
+              className=" w-full md:w-auto border-2 p-2 rounded-xl shadow-md focus:ring-2 focus:ring-purple-400 transition-all duration-300 hover:scale-105"
               required
               type="text"
               value={arr.Name}
@@ -128,11 +131,14 @@ const NewTodos = () => {
               }
             />
           </div>
-          <div className="flex justify-center items-center  p-2 m-3">
-            <label className=" font-semibold text-xl"> Duedate</label>
+          <div className="flex flex-col md:flex-row itmes-center justify-around w-full md:w-auto gap-1">
+            <label className=" font-semibold text-xl  md:self-center">
+              {" "}
+              Duedate
+            </label>
             <input
               required
-              className=" rounded-2xl outline-indigo-50 border-2 m-3 p-2 shadow-lg max-w-4xl"
+              className=" w-full md:w-auto border-2 p-2  rounded-xl shadow-md focus:ring-2 focus:ring-purple-400 transition-all duration-300 hover:scale-105"
               type="date"
               value={arr.duedate}
               onChange={(e) =>
@@ -140,11 +146,13 @@ const NewTodos = () => {
               }
             />
           </div>
-          <div className="flex justify-center items-center  p-2 m-3">
-            <label className=" font-semibold text-xl">Priority</label>
+          <div className="flex flex-col md:flex-row itmes-center justify-around w-full md:w-auto gap-1">
+            <label className=" font-semibold text-xl  md:self-center">
+              Priority
+            </label>
             <input
               required
-              className=" rounded-2xl outline-indigo-50 border-2 m-3 p-2 shadow-lg max-w-4xl"
+              className=" w-full md:w-auto border-2 p-2 rounded-xl shadow-md focus:ring-2 focus:ring-purple-400 transition-all duration-300 hover:scale-105"
               type="number"
               value={arr.Priority}
               onChange={(e) =>
@@ -154,7 +162,7 @@ const NewTodos = () => {
           </div>
           <button
             onClick={handleSubmit}
-            className="border-2 border-amber-800 rounded-2xl bg-black p-2 text-white font-bold h-10 w-20 m-14"
+            className="bg-purple-600 px-6 py-2 rounded-xl text-white font-semibold shadow-xl hover:bg-purple-700 hover:scale-110 transition-all duration-300"
           >
             {" "}
             Add{" "}
@@ -162,7 +170,7 @@ const NewTodos = () => {
         </div>
         <div className="flex justify-center items-center  p-2 m-3">
           <button
-            className="bg-purple-600 p-2 text-white m-2"
+            className="bg-purple-600 p-2 text-white m-2 hover:scale-105 hover:bg-purple-900 transition duration-300"
             onClick={() => {
               handleToggle("name");
             }}
@@ -171,7 +179,7 @@ const NewTodos = () => {
             Sort by Name {sorttype === "name" ? sortorder || "none" : ""}
           </button>
           <button
-            className="bg-purple-600 p-2 text-white m-2"
+            className="bg-purple-600 p-2 text-white m-2 hover:scale-105 hover:bg-purple-900 transition duration-300"
             onClick={() => {
               handleToggle("date");
             }}
@@ -180,7 +188,7 @@ const NewTodos = () => {
             Sort by Date {sorttype === "date" ? sortorder || "none" : ""}
           </button>
           <button
-            className="bg-purple-600 p-2 text-white m-2"
+            className="bg-purple-600 p-2 text-white m-2 hover:scale-105 hover:bg-purple-900 transition duration-300"
             onClick={() => {
               handleToggle("Priority");
             }}
@@ -191,63 +199,74 @@ const NewTodos = () => {
 
           <button
             onClick={() => deleteAlldata()}
-            className="bg-purple-600 p-2 text-white m-2"
+            className="bg-purple-600 p-2 text-white m-2 hover:scale-105 hover:bg-purple-950 transition duration-300"
           >
             {" "}
             Delete All
           </button>
         </div>
 
-        <div className="bg-pink-200 w-200 mx-auto rounded-2xl p-2 m-2 flex justify-between items-center">
+        <div className="w-full md:w-1/2 mx-auto mt-6 px-4">
           <input
             type="text"
-            placeholder="search"
+            placeholder="search tasks "
             onChange={(e) => setSearchText(e.target.value)}
-          ></input>
+            className="w-full p-3 rounded-full border shadow:md focus:ring-2 focus:ring-purple-400 transition-all duration-300"
+          />
         </div>
 
-        <div className="bg-amber-300 flex flex-col  self-center text-black">
-          <table className="border-separate border-spacing-y-3">
-            <thead>
-              <th className="p-2 border"> Task Name</th>
-              <th className="p-2 border"> DueDate</th>
-              <th className="p-2 border">Priority</th>
-            </thead>
-            <tbody>
-              {paginatedData.map((item, i) => (
-                <tr
-                  key={item.id}
-                  className={`${i % 2 == 0 ? "bg-green-400" : "bg-blue-400"} hover:scale-[1] hover:bg-yellow-100 transition`}
-                >
-                  <td className="p-2 border text-center"> {item.Name}</td>
-                  <td className="p-2 border text-center">{item.duedate}</td>
-                  <td className="p-2 border  text-center ">{item.Priority}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-          <div className="flex justify-between  bg-red-400 p-2  ">
-            <button
-              disabled={currentPage === 1}
-              onClick={() => setCurrentPage((prev) => prev - 1)}
-            >
-              {" "}
-              prev
-            </button>
-            {/* {Array.from({ totalPage: lastIndex }, (_, i) => {})} */}
-            <span>
-              {" "}
-              page {currentPage} of {totalPage}
-            </span>
-            <button
-              disabled={lastIndex >= displayData.length}
-              onClick={() => setCurrentPage((prev) => prev + 1)}
-            >
-              {" "}
-              next
-            </button>
+        {paginatedData.length ? (
+          <div className="overflow-x-auto m-6 px-4 w-full ">
+            <table className="w-full border-collapse rounded-xl overflow-hidden shadow-lg">
+              <thead className="bg-purple-500 border-b">
+                <th className="p-2 border"> Task Name</th>
+                <th className="p-2 border"> DueDate</th>
+                <th className="p-2 border">Priority</th>
+              </thead>
+              <tbody>
+                {paginatedData.map((item, i) => (
+                  <tr className="hover:bg-purple-100 hover:scale-[1.01] transition-all duration-300">
+                    <td className="p-3 text-center border"> {item.Name}</td>
+                    <td className="p-3 text-center border">{item.duedate}</td>
+                    <td className="p-3 text-center border ">{item.Priority}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            <div className="flex justify-between  bg-red-400 p-2  ">
+              <button
+                disabled={currentPage === 1}
+                onClick={() => setCurrentPage((prev) => prev - 1)}
+              >
+                {" "}
+                prev
+              </button>
+              <span>
+                {" "}
+                page {currentPage} of {totalPage}
+              </span>
+              <button
+                disabled={lastIndex >= displayData.length}
+                onClick={() => setCurrentPage((prev) => prev + 1)}
+              >
+                {" "}
+                next
+              </button>
+            </div>
           </div>
-        </div>
+        ) : (
+          <div className={` ${darkmode ? "text-white" : "text-black"}`}>
+            <h2 className="font-bold text-2xl mt-6 tracking-wide">
+              {" "}
+              No Task to display
+            </h2>
+            <p className="text-xl text-gray-500">
+              {" "}
+              Try adding new Task or try for different search
+            </p>
+          </div>
+        )}
+
         <div className="flex justify-center">
           <button
             className="bg-black rounded-2xl text-white w-24 py-2 mt-6 hover:bg-gray-800 transition"
