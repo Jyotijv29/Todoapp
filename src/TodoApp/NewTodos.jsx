@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const NewTodos = () => {
   const arrayvalue = "arr";
@@ -17,6 +18,7 @@ const NewTodos = () => {
   const [debouncetext, setDebouncetext] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [darkmode, setDarkmode] = useState(false);
+  const [showtooltip, setShowtooltip] = useState(false);
 
   const lastIndex = currentPage * itemsperpage;
   const firsttIndex = lastIndex - itemsperpage;
@@ -146,12 +148,14 @@ const NewTodos = () => {
               }
             />
           </div>
-          <div className="flex flex-col md:flex-row itmes-center justify-around w-full md:w-auto gap-1">
+          <div className="flex flex-col md:flex-row itmes-center justify-around w-full md:w-auto gap-1 relative">
             <label className=" font-semibold text-xl  md:self-center">
               Priority
             </label>
             <input
               required
+              onFocus={() => setShowtooltip(true)}
+              onBlur={() => setShowtooltip(false)}
               className=" w-full md:w-auto border-2 p-2 rounded-xl shadow-md focus:ring-2 focus:ring-purple-400 transition-all duration-300 hover:scale-105"
               type="number"
               value={arr.Priority}
@@ -159,6 +163,11 @@ const NewTodos = () => {
                 setArr((prev) => ({ ...prev, Priority: e.target.value }))
               }
             />
+            {showtooltip && (
+              <div className="absolute top-full mt-2 w-1/2 p -3 bg-purple-100 flex flex-col z-10 shadow-lg  ">
+                <p> high - 1</p> <p> Medium - 2</p> <p> Low - 3</p>
+              </div>
+            )}
           </div>
           <button
             onClick={handleSubmit}

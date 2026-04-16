@@ -3,7 +3,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import TodoView from "./TodoApp/TodoView";
 import Todo from "./TodoApp/Todo";
 import NewTodos from "./TodoApp/NewTodos";
-import Toaster from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
+
 function App() {
   return (
     <>
