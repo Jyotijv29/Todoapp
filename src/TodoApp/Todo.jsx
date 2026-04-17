@@ -76,24 +76,17 @@ const Todo = () => {
   const handleDelete = (id) => {
     const newdata = trackdata.filter((item) => item.id !== id);
     setTrackdata(newdata);
+    toast.error("Task deleted ❌ ");
   };
 
-  const HandleDateFilter = () => {
-    const sortData = [...trackdata].sort((a, b) => {
-      const dateA = new Date(a.duedate);
-      const dateB = new Date(b.duedate);
-
-      return sortorder === "asc" ? dateA - dateB : dateB - dateA;
-    });
-  };
   return (
     <>
-      <div className="min-h-screen bg-gradient-to-br from-purple-800 via-blue-800 to-indigo-900 text-white">
+      <div className="min-h-screen bg-gradient-to-r from-purple-800 via-blue-800 to-indigo-900 text-white w-full">
         <h1 className="text-3xl md:text-4xl font-bold text-center pt-6 tracking-wide">
           Todo List
         </h1>
 
-        <div className="w-full max-w-5xl mx-auto mt-8 px-4 grid grid-cols-1  md:grid-cols-4 gap-4 items-end">
+        <div className="w-full max-w-5xl mx-auto mt-8 px-4 grid grid-cols-1 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 gap-4 items-end">
           <div className="flex flex-col gap-1">
             <label className="font-semibold">Task Name</label>
             <input
@@ -153,7 +146,7 @@ const Todo = () => {
             </div>
 
             {open && (
-              <div className="absolute mt-2 w-full bg-pink-200 text-black rounded-xl shadow-lg animate-fadeIn">
+              <div className="absolute  w-full bg-pink-200 text-black rounded-xl shadow-lg animate-fadeIn">
                 {["all", "pending", "complete", "running"].map((item) => (
                   <p
                     key={item}
@@ -215,7 +208,7 @@ const Todo = () => {
             ))}
         </div>
 
-        <div className="flex justify-center mt-6 pb-6">
+        <div className="flex justify-center mt-6 ">
           <button
             onClick={() => navigate("/")}
             className="bg-black px-6 py-2 rounded-xl hover:bg-gray-900 hover:scale-105 transition"
